@@ -6,7 +6,18 @@ class App extends Component{
   render(){
     return(
       <div className="App">
-        <h1>Bitcoin price</h1>
+        <div className="title"> <h1>Bit<span class="coin">coin</span> price</h1> </div>
+
+        <div className="currencies">
+          <select name="first-currency">
+            <option value="bitcoin">BTC</option>
+          </select>
+
+          <select name="second-currency">
+            <option value="united-states-dollar">USD</option>
+          </select>
+        </div>
+
       </div>
     );
   }
