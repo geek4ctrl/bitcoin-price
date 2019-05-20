@@ -2,7 +2,7 @@
   "name": "bitcoin-price",
   "version": "1.0.0",
   "description": "A small app that gives Bitcoin price over a period of time",
-  "main": "App.js",
+  "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development"
   },
