@@ -38,3 +38,14 @@
     border: 1px solid #FF761C;
     cursor: pointer;
   }
+
+  .period{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+    margin-top: 40px;
+    color: #9EA1A6;
+  }
+
+  
