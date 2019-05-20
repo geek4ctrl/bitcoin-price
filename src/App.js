@@ -1,5 +1,6 @@
 import {hot} from "react-hot-loader";
 import React, { Component} from "react";
+import {Bar} from 'react-chartjs-2';
 import "./App.css";
 
 class App extends Component{
@@ -25,6 +26,15 @@ class App extends Component{
           <label>1 month</label>
           <label>3 months</label>
           <label>6 months</label>
+        </div>
+
+        <div className="chart-period">
+        < Bar className="bar-chart"
+          data={[5, 10, 15, 20, 25, 30]}
+          width={100}
+          height={500}
+          options={{ maintainAspectRatio: false }}
+        />
         </div>
 
       </div>
