@@ -2,6 +2,8 @@ import {hot} from "react-hot-loader";
 import React, { Component} from "react";
 import ChartComponent, {Bar, Line} from 'react-chartjs-2';
 import "./App.css";
+import axios from 'axios';
+import cors from 'cors';
 
 class ChartOne extends Component{
   constructor(props){
@@ -196,7 +198,8 @@ class App extends Component{
     super(props);
 
     this.state = {
-      labelClicked: null
+      labelClicked: null,
+      realData: []
     }
 
     this.handleDays = this.handleDays.bind(this);
@@ -204,12 +207,45 @@ class App extends Component{
 
   handleDays(e){
       e.preventDefault();
-      console.log('It has been clicked.');
-      console.log(e.target.dataset);
-      console.log(e.target.dataset.param);
+
+      let period;
+
+      if (e.target.dataset.param == 1){
+        period = "1day";
+      }
+      else if (e.target.dataset.param == 5)
+      {
+        period = "5days";
+      }
+      else if (e.target.dataset.param == 30)
+      {
+        period = "30days";
+      }
+      else if (e.target.dataset.param == 90)
+      {
+        period = "90days";
+      }
+      else if (e.target.dataset.param == 180)
+      {
+        period = "180days";
+      }
 
       this.setState({
         labelClicked: e.target.dataset.param
+      });
+
+      axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://blockchain.info/charts/market-price?timespan=${period}&format=json`)
+      .then(function(response){
+
+        let data = response.data.values;
+        
+        data.forEach(element => {
+
+        });
+
+      })
+      .catch(function(error){
+        console.log(error);
       });
   }
 
@@ -238,8 +274,6 @@ class App extends Component{
           <label data-param="90" onClick={this.handleDays}>3 months</label>
           <label data-param="180" onClick={this.handleDays}>6 months</label>
         </div>
-
-        {/* Display  chart based on days */}
         
         { this.state.labelClicked == 1 && <ChartOne/> }
         { this.state.labelClicked == 5 && <ChartFive/> }
