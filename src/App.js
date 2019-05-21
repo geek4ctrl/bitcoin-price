@@ -1,14 +1,59 @@
 import {hot} from "react-hot-loader";
 import React, { Component} from "react";
-import {Bar} from 'react-chartjs-2';
+import ChartComponent, {Bar} from 'react-chartjs-2';
 import "./App.css";
+
+class Chart extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      chartData: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        datasets: [
+          {
+            label: 'Price',
+            data: [
+              5,
+              10,
+              15,
+              20,
+              25,
+              30
+            ],
+            backgroundColor: [
+              'red',
+              'yellow',
+              'blue',
+              'brown',
+              'pink',
+              'grey'
+            ]
+          }
+        ]
+      }
+    }
+  }
+
+  render(){
+    return (
+      <div className="chart">
+          <Bar className="bar-chart"
+            data={this.state.chartData}
+            width={100}
+            height={500}
+            options={{ maintainAspectRatio: false }}
+          />
+      </div>
+    )
+  }
+}
 
 class App extends Component{
   render(){
     return(
       <div className="App">
 
-        <div className="title"> <h1>Bit<span class="coin">coin</span> price</h1> </div>
+        <div className="title"> <h1>Bit<span className="coin">coin</span> price</h1> </div>
 
         <div className="currencies">
           <select name="first-currency">
@@ -28,14 +73,7 @@ class App extends Component{
           <label>6 months</label>
         </div>
 
-        <div className="chart-period">
-        < Bar className="bar-chart"
-          data={[5, 10, 15, 20, 25, 30]}
-          width={100}
-          height={500}
-          options={{ maintainAspectRatio: false }}
-        />
-        </div>
+        <Chart/>
 
       </div>
     );
