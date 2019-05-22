@@ -31,7 +31,7 @@ class ChartOne extends Component{
     return (
       <div className="chart">
           <Line className="bar-chart"
-            data={this.state.chartData}
+            data={[...this.props.items]}
             width={100}
             height={500}
             options={{ maintainAspectRatio: false }}
@@ -67,7 +67,7 @@ class ChartFive extends Component{
     return (
       <div className="chart">
           <Line className="bar-chart"
-            data={this.state.chartData}
+            data={this.props.items}
             width={100}
             height={500}
             options={{ maintainAspectRatio: false }}
@@ -103,7 +103,7 @@ class ChartThirty extends Component{
     return (
       <div className="chart">
           <Line className="bar-chart"
-            data={this.state.chartData}
+            data={this.props.items}
             width={100}
             height={500}
             options={{ maintainAspectRatio: false }}
@@ -141,7 +141,7 @@ class ChartNinety extends Component{
     return (
       <div className="chart">
           <Line className="bar-chart"
-            data={this.state.chartData}
+            data={this.props.items}
             width={100}
             height={500}
             options={{ maintainAspectRatio: false }}
@@ -182,7 +182,7 @@ class ChartOneEighty extends Component{
     return (
       <div className="chart">
           <Line className="bar-chart"
-            data={this.state.chartData}
+           data={this.props.items}
             width={100}
             height={500}
             options={{ maintainAspectRatio: false }}
@@ -199,6 +199,7 @@ class App extends Component{
 
     this.state = {
       labelClicked: null,
+      data: null,
       realData: []
     }
 
@@ -235,17 +236,15 @@ class App extends Component{
       });
 
       axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://blockchain.info/charts/market-price?timespan=${period}&format=json`)
-      .then(function(response){
-
+      .then((response) => {
         let data = response.data.values;
-        
-        data.forEach(element => {
+        this.setState({data});
 
-        });
+        this.setState({realData: [...this.state.realData, data]});
 
       })
       .catch(function(error){
-        console.log(error);
+        // console.log(error);
       });
   }
 
@@ -275,11 +274,11 @@ class App extends Component{
           <label data-param="180" onClick={this.handleDays}>6 months</label>
         </div>
         
-        { this.state.labelClicked == 1 && <ChartOne/> }
-        { this.state.labelClicked == 5 && <ChartFive/> }
-        { this.state.labelClicked == 30 && <ChartThirty/> }
-        { this.state.labelClicked == 90 && <ChartNinety/> }
-        { this.state.labelClicked == 180 && <ChartOneEighty/> }
+        { this.state.labelClicked == 1 && <ChartOne items={this.state.realData}/> }
+        { this.state.labelClicked == 5 && <ChartFive items={this.state.realData}/> }
+        { this.state.labelClicked == 30 && <ChartThirty items={this.state.realData}/> }
+        { this.state.labelClicked == 90 && <ChartNinety items={this.state.realData}/> }
+        { this.state.labelClicked == 180 && <ChartOneEighty items={this.state.realData}/> }
 
       </div>
     );
