@@ -10,13 +10,11 @@ class ChartOne extends Component{
     super(props);
     this.state = {
       chartData: {
-        labels: ['May'],
+        labels: ['May', 'June', 'July', 'Aug'],
         datasets: [
           {
             label: 'Bitcoin Price',
-            data: [
-                  10
-            ],
+            data: this.props.items[0].datasets[0].data,
             backgroundColor: [
               'grey'
             ],
@@ -28,10 +26,15 @@ class ChartOne extends Component{
   }
 
   render(){
+
+    console.log("One one One");
+    console.log(this.state.chartData.labels);
+    console.log(this.state.chartData.datasets);
+
     return (
       <div className="chart">
           <Line className="bar-chart"
-            data={[...this.props.items]}
+            data={this.state.chartData}
             width={100}
             height={500}
             options={{ maintainAspectRatio: false }}
@@ -64,6 +67,9 @@ class ChartFive extends Component{
   }
 
   render(){
+
+    //console.log(this.props.items);
+
     return (
       <div className="chart">
           <Line className="bar-chart"
@@ -200,7 +206,22 @@ class App extends Component{
     this.state = {
       labelClicked: null,
       data: null,
-      realData: []
+      realData: [],
+      receivingData: [
+        {
+          labels: [],
+          datasets: [
+            {
+              label: 'Bitcoin Data Received',
+              data: [],
+              backgroundColor: [
+                'blue'
+              ],
+              fill: false
+            }
+          ]
+        }
+      ]
     }
 
     this.handleDays = this.handleDays.bind(this);
@@ -212,7 +233,7 @@ class App extends Component{
       let period;
 
       if (e.target.dataset.param == 1){
-        period = "1day";
+        period = "1days";
       }
       else if (e.target.dataset.param == 5)
       {
@@ -235,12 +256,35 @@ class App extends Component{
         labelClicked: e.target.dataset.param
       });
 
-      axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://blockchain.info/charts/market-price?timespan=${period}&format=json`)
+      axios.get('https://cors-anywhere.herokuapp.com/' + 'https://blockchain.info/charts/market-price?timespan='+ period +'&format=json')
       .then((response) => {
-        let data = response.data.values;
-        this.setState({data});
 
-        this.setState({realData: [...this.state.realData, data]});
+          console.log(response);
+          console.log(response.data);
+          console.log(response.data.values);
+          console.log(response.data.values[0]);
+
+          console.log('Check down');
+
+          this.state.receivingData[0].datasets[0].data.length = 0;
+
+          response.data.values.forEach((element) => {
+            console.log('Here ->' + Math.round(element.y));
+
+            this.state.receivingData[0].datasets[0].data.push(Math.round(element.y));
+            
+          });
+
+          console.log('Check up');
+
+          console.log('---');
+          console.log(this.state.receivingData);
+          console.log(this.state.receivingData[0]);
+          console.log(this.state.receivingData[0].datasets);
+          console.log(this.state.receivingData[0].datasets[0]);
+
+          console.log("Check it here");
+          console.log(this.state.receivingData[0].datasets[0].data);
 
       })
       .catch(function(error){
@@ -249,12 +293,15 @@ class App extends Component{
   }
 
   render(){
+
+    //console.log(this.state.realData)
+
     return(
       <div className="App">
 
         Just clicked: {this.state.labelClicked}
       
-        <div className="title"> <h1>Bit<span className="coin">coin</span> price</h1> </div>
+        {/* <div className="title"> <h1>Bit<span className="coin">coin</span> price</h1> </div> */}
 
         <div className="currencies">
           <select name="first-currency">
@@ -274,11 +321,11 @@ class App extends Component{
           <label data-param="180" onClick={this.handleDays}>6 months</label>
         </div>
         
-        { this.state.labelClicked == 1 && <ChartOne items={this.state.realData}/> }
-        { this.state.labelClicked == 5 && <ChartFive items={this.state.realData}/> }
-        { this.state.labelClicked == 30 && <ChartThirty items={this.state.realData}/> }
-        { this.state.labelClicked == 90 && <ChartNinety items={this.state.realData}/> }
-        { this.state.labelClicked == 180 && <ChartOneEighty items={this.state.realData}/> }
+        { this.state.labelClicked == 1 && <ChartOne items={this.state.receivingData}/> }
+        { this.state.labelClicked == 5 && <ChartFive items={this.state.receivingData}/> }
+        { this.state.labelClicked == 30 && <ChartThirty items={this.state.receivingData}/> }
+        { this.state.labelClicked == 90 && <ChartNinety items={this.state.receivingData}/> }
+        { this.state.labelClicked == 180 && <ChartOneEighty items={this.state.receivingData}/> }
 
       </div>
     );
