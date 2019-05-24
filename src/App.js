@@ -49,13 +49,11 @@ class ChartFive extends Component{
     super(props);
     this.state = {
       chartData: {
-        labels: ['May'],
+        labels: this.props.items[0].datasets[0].data,
         datasets: [
           {
             label: 'Bitcoin Price',
-            data: [
-                  5
-            ],
+            data: this.props.items[0].datasets[0].data,
             backgroundColor: [
               'grey'
             ],
@@ -68,12 +66,14 @@ class ChartFive extends Component{
 
   render(){
 
-    //console.log(this.props.items);
+    console.log("One one One");
+    console.log(this.state.chartData.labels);
+    console.log(this.state.chartData.datasets);
 
     return (
       <div className="chart">
           <Line className="bar-chart"
-            data={this.props.items}
+            data={this.state.chartData}
             width={100}
             height={500}
             options={{ maintainAspectRatio: false }}
@@ -88,13 +88,11 @@ class ChartThirty extends Component{
     super(props);
     this.state = {
       chartData: {
-        labels: ['June'],
+        labels: ['May', 'June', 'July', 'Aug'],
         datasets: [
           {
             label: 'Bitcoin Price',
-            data: [
-                  10
-            ],
+            data: this.props.items[0].datasets[0].data,
             backgroundColor: [
               'grey'
             ],
@@ -106,10 +104,15 @@ class ChartThirty extends Component{
   }
 
   render(){
+
+    console.log("One one One");
+    console.log(this.state.chartData.labels);
+    console.log(this.state.chartData.datasets);
+
     return (
       <div className="chart">
           <Line className="bar-chart"
-            data={this.props.items}
+            data={this.state.chartData}
             width={100}
             height={500}
             options={{ maintainAspectRatio: false }}
@@ -124,15 +127,11 @@ class ChartNinety extends Component{
     super(props);
     this.state = {
       chartData: {
-        labels: ['April','May', 'June'],
+        labels: ['May', 'June', 'July', 'Aug'],
         datasets: [
           {
             label: 'Bitcoin Price',
-            data: [
-                  25,
-                  35,
-                  10
-            ],
+            data: this.props.items[0].datasets[0].data,
             backgroundColor: [
               'grey'
             ],
@@ -144,10 +143,15 @@ class ChartNinety extends Component{
   }
 
   render(){
+
+    console.log("One one One");
+    console.log(this.state.chartData.labels);
+    console.log(this.state.chartData.datasets);
+
     return (
       <div className="chart">
           <Line className="bar-chart"
-            data={this.props.items}
+            data={this.state.chartData}
             width={100}
             height={500}
             options={{ maintainAspectRatio: false }}
@@ -162,18 +166,11 @@ class ChartOneEighty extends Component{
     super(props);
     this.state = {
       chartData: {
-        labels: ['January','February','March','April','May', 'June'],
+        labels: ['May', 'June', 'July', 'Aug'],
         datasets: [
           {
             label: 'Bitcoin Price',
-            data: [
-                  60,
-                  20,
-                  30,
-                  10,
-                  25,
-                  60
-            ],
+            data: this.props.items[0].datasets[0].data,
             backgroundColor: [
               'grey'
             ],
@@ -185,10 +182,15 @@ class ChartOneEighty extends Component{
   }
 
   render(){
+
+    console.log("One one One");
+    console.log(this.state.chartData.labels);
+    console.log(this.state.chartData.datasets);
+
     return (
       <div className="chart">
           <Line className="bar-chart"
-           data={this.props.items}
+            data={this.state.chartData}
             width={100}
             height={500}
             options={{ maintainAspectRatio: false }}
