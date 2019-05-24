@@ -10,7 +10,7 @@ class ChartOne extends Component{
     super(props);
     this.state = {
       chartData: {
-        labels: ['May', 'June', 'July', 'Aug'],
+        labels: this.props.items[0].labels,
         datasets: [
           {
             label: 'Bitcoin Price',
@@ -49,7 +49,7 @@ class ChartFive extends Component{
     super(props);
     this.state = {
       chartData: {
-        labels: this.props.items[0].datasets[0].data,
+        labels: this.props.items[0].labels,
         datasets: [
           {
             label: 'Bitcoin Price',
@@ -88,7 +88,7 @@ class ChartThirty extends Component{
     super(props);
     this.state = {
       chartData: {
-        labels: ['May', 'June', 'July', 'Aug'],
+        labels: this.props.items[0].labels,
         datasets: [
           {
             label: 'Bitcoin Price',
@@ -127,7 +127,7 @@ class ChartNinety extends Component{
     super(props);
     this.state = {
       chartData: {
-        labels: ['May', 'June', 'July', 'Aug'],
+        labels: this.props.items[0].labels,
         datasets: [
           {
             label: 'Bitcoin Price',
@@ -166,7 +166,7 @@ class ChartOneEighty extends Component{
     super(props);
     this.state = {
       chartData: {
-        labels: ['May', 'June', 'July', 'Aug'],
+        labels: this.props.items[0].labels,
         datasets: [
           {
             label: 'Bitcoin Price',
@@ -258,35 +258,55 @@ class App extends Component{
         labelClicked: e.target.dataset.param
       });
 
-      axios.get('https://cors-anywhere.herokuapp.com/' + 'https://blockchain.info/charts/market-price?timespan='+ period +'&format=json')
+      // axios.get('https://cors-anywhere.herokuapp.com/' + 'https://blockchain.info/charts/market-price?timespan='+ period +'&format=json')
+      axios.get('https://cors-anywhere.herokuapp.com/' + 'https://api.sheety.co/95d5a869-510a-4cb2-a93d-3984aaf060f8')
       .then((response) => {
 
-          console.log(response);
-          console.log(response.data);
-          console.log(response.data.values);
-          console.log(response.data.values[0]);
+          //console.log(response.data[0]);
+          //console.log(response.data[0]['5399.37']);
+          //console.log(response.data[0]['apr22,2019']);
 
-          console.log('Check down');
+          //console.log(response.data);
 
+          this.state.receivingData[0].labels.length = 0;
           this.state.receivingData[0].datasets[0].data.length = 0;
 
-          response.data.values.forEach((element) => {
-            console.log('Here ->' + Math.round(element.y));
+          response.data.forEach((elements) => {
 
-            this.state.receivingData[0].datasets[0].data.push(Math.round(element.y));
-            
+            //console.log(elements);
+            //console.log(elements['apr22,2019']);
+            this.state.receivingData[0].labels.push(elements['apr22,2019']);
+            this.state.receivingData[0].datasets[0].data.push(elements['5399.37']);
+
           });
 
-          console.log('Check up');
-
-          console.log('---');
-          console.log(this.state.receivingData);
-          console.log(this.state.receivingData[0]);
-          console.log(this.state.receivingData[0].datasets);
-          console.log(this.state.receivingData[0].datasets[0]);
-
-          console.log("Check it here");
+          console.log(this.state.receivingData[0].labels);
           console.log(this.state.receivingData[0].datasets[0].data);
+
+          // console.log(response.data.values);
+          // console.log(response.data.values[0]);
+
+          // console.log('Check down');
+
+          // this.state.receivingData[0].datasets[0].data.length = 0;
+
+          // response.data.values.forEach((element) => {
+          //   console.log('Here ->' + Math.round(element.y));
+
+          //   this.state.receivingData[0].datasets[0].data.push(Math.round(element.y));
+            
+          // });
+
+          // console.log('Check up');
+
+          // console.log('---');
+          // console.log(this.state.receivingData);
+          // console.log(this.state.receivingData[0]);
+          // console.log(this.state.receivingData[0].datasets);
+          // console.log(this.state.receivingData[0].datasets[0]);
+
+          // console.log("Check it here");
+          // console.log(this.state.receivingData[0].datasets[0].data);
 
       })
       .catch(function(error){
