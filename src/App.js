@@ -20,7 +20,14 @@ class ChartOne extends Component{
             ],
             fill: false
           }
-        ]
+        ],
+        options: {
+          legend: {
+            'onClick': function (evt, item) {
+              console.log ('legend onClick', evt, item);
+            }
+          }
+        }
       }
     }
   }
@@ -323,9 +330,9 @@ class App extends Component{
 
         Just clicked: {this.state.labelClicked}
       
-        {/* <div className="title"> <h1>Bit<span className="coin">coin</span> price</h1> </div> */}
+        <div className="title"> <h1>Bit<span className="coin">coin</span> market</h1> </div>
 
-        <div className="currencies">
+        {/* <div className="currencies">
           <select name="first-currency">
             <option value="bitcoin">BTC</option>
           </select>
@@ -333,7 +340,7 @@ class App extends Component{
           <select name="second-currency">
             <option value="united-states-dollar">USD</option>
           </select>
-        </div>
+        </div> */}
 
         <div className="period">
           <label data-param="1" onClick={this.handleDays}>1 day</label>
