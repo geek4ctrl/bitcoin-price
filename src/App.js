@@ -34,9 +34,9 @@ class ChartOne extends Component{
 
   render(){
 
-    console.log("One one One");
-    console.log(this.state.chartData.labels);
-    console.log(this.state.chartData.datasets);
+    // console.log("One one One");
+    // console.log(this.state.chartData.labels);
+    // console.log(this.state.chartData.datasets);
 
     return (
       <div className="chart">
@@ -266,29 +266,50 @@ class App extends Component{
       });
 
       // axios.get('https://cors-anywhere.herokuapp.com/' + 'https://blockchain.info/charts/market-price?timespan='+ period +'&format=json')
-      axios.get('https://cors-anywhere.herokuapp.com/' + 'https://api.sheety.co/95d5a869-510a-4cb2-a93d-3984aaf060f8')
-      .then((response) => {
+      // axios.get('https://cors-anywhere.herokuapp.com/' + 'https://api.sheety.co/95d5a869-510a-4cb2-a93d-3984aaf060f8')
+      // .then((response) => {
 
-          //console.log(response.data[0]);
+        axios.get('https://cors-anywhere.herokuapp.com/' + 'https://api.coindesk.com/v1/bpi/historical/close.json?start=2019-05-01&end=2019-05-26')
+        .then((response) => {
+
+          console.log(response.data.bpi);
+          
+          let o = response.data.bpi;
+
+          this.state.receivingData[0].labels.length = 0;
+          this.state.receivingData[0].datasets[0].data.length = 0;
+
+          for (var prop in o){
+            console.log(prop, o[prop]);
+
+            this.state.receivingData[0].labels.push(prop);
+            this.state.receivingData[0].datasets[0].data.push(o[prop]);
+
+          }
+
           //console.log(response.data[0]['5399.37']);
           //console.log(response.data[0]['apr22,2019']);
 
           //console.log(response.data);
 
-          this.state.receivingData[0].labels.length = 0;
-          this.state.receivingData[0].datasets[0].data.length = 0;
+          // 2nd API 
+          // this.state.receivingData[0].labels.length = 0;
+          // this.state.receivingData[0].datasets[0].data.length = 0;
 
-          response.data.forEach((elements) => {
+          // 2nd API 
+          // response.data.bpi.forEach((elements) => {
 
-            //console.log(elements);
-            //console.log(elements['apr22,2019']);
-            this.state.receivingData[0].labels.push(elements['apr22,2019']);
-            this.state.receivingData[0].datasets[0].data.push(elements['5399.37']);
+          //   //console.log(elements);
+          //   //console.log(elements[keys]);
+          //   //console.log(elements['apr22,2019']);
+          //   // this.state.receivingData[0].labels.push(elements['apr22,2019']);
+          //   // this.state.receivingData[0].datasets[0].data.push(elements['5399.37']);
 
-          });
+          // });
 
-          console.log(this.state.receivingData[0].labels);
-          console.log(this.state.receivingData[0].datasets[0].data);
+          // 2nd API 
+          // console.log(this.state.receivingData[0].labels);
+          // console.log(this.state.receivingData[0].datasets[0].data);
 
           // console.log(response.data.values);
           // console.log(response.data.values[0]);
