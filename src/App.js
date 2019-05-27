@@ -51,161 +51,6 @@ class ChartOne extends Component{
   }
 }
 
-class ChartFive extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      chartData: {
-        labels: this.props.items[0].labels,
-        datasets: [
-          {
-            label: 'Bitcoin Price',
-            data: this.props.items[0].datasets[0].data,
-            backgroundColor: [
-              'grey'
-            ],
-            fill: false
-          }
-        ]
-      }
-    }
-  }
-
-  render(){
-
-    console.log("One one One");
-    console.log(this.state.chartData.labels);
-    console.log(this.state.chartData.datasets);
-
-    return (
-      <div className="chart">
-          <Line className="bar-chart"
-            data={this.state.chartData}
-            width={100}
-            height={500}
-            options={{ maintainAspectRatio: false }}
-          />
-      </div>
-    )
-  }
-}
-
-class ChartThirty extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      chartData: {
-        labels: this.props.items[0].labels,
-        datasets: [
-          {
-            label: 'Bitcoin Price',
-            data: this.props.items[0].datasets[0].data,
-            backgroundColor: [
-              'grey'
-            ],
-            fill: false
-          }
-        ]
-      }
-    }
-  }
-
-  render(){
-
-    console.log("One one One");
-    console.log(this.state.chartData.labels);
-    console.log(this.state.chartData.datasets);
-
-    return (
-      <div className="chart">
-          <Line className="bar-chart"
-            data={this.state.chartData}
-            width={100}
-            height={500}
-            options={{ maintainAspectRatio: false }}
-          />
-      </div>
-    )
-  }
-}
-
-class ChartNinety extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      chartData: {
-        labels: this.props.items[0].labels,
-        datasets: [
-          {
-            label: 'Bitcoin Price',
-            data: this.props.items[0].datasets[0].data,
-            backgroundColor: [
-              'grey'
-            ],
-            fill: false
-          }
-        ]
-      }
-    }
-  }
-
-  render(){
-
-    console.log("One one One");
-    console.log(this.state.chartData.labels);
-    console.log(this.state.chartData.datasets);
-
-    return (
-      <div className="chart">
-          <Line className="bar-chart"
-            data={this.state.chartData}
-            width={100}
-            height={500}
-            options={{ maintainAspectRatio: false }}
-          />
-      </div>
-    )
-  }
-}
-
-class ChartOneEighty extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      chartData: {
-        labels: this.props.items[0].labels,
-        datasets: [
-          {
-            label: 'Bitcoin Price',
-            data: this.props.items[0].datasets[0].data,
-            backgroundColor: [
-              'grey'
-            ],
-            fill: false
-          }
-        ]
-      }
-    }
-  }
-
-  render(){
-
-    console.log("One one One");
-    console.log(this.state.chartData.labels);
-    console.log(this.state.chartData.datasets);
-
-    return (
-      <div className="chart">
-          <Line className="bar-chart"
-            data={this.state.chartData}
-            width={100}
-            height={500}
-            options={{ maintainAspectRatio: false }}
-          />
-      </div>
-    )
-  }
-}
 
 class App extends Component{
 
@@ -287,55 +132,6 @@ class App extends Component{
 
           }
 
-          //console.log(response.data[0]['5399.37']);
-          //console.log(response.data[0]['apr22,2019']);
-
-          //console.log(response.data);
-
-          // 2nd API 
-          // this.state.receivingData[0].labels.length = 0;
-          // this.state.receivingData[0].datasets[0].data.length = 0;
-
-          // 2nd API 
-          // response.data.bpi.forEach((elements) => {
-
-          //   //console.log(elements);
-          //   //console.log(elements[keys]);
-          //   //console.log(elements['apr22,2019']);
-          //   // this.state.receivingData[0].labels.push(elements['apr22,2019']);
-          //   // this.state.receivingData[0].datasets[0].data.push(elements['5399.37']);
-
-          // });
-
-          // 2nd API 
-          // console.log(this.state.receivingData[0].labels);
-          // console.log(this.state.receivingData[0].datasets[0].data);
-
-          // console.log(response.data.values);
-          // console.log(response.data.values[0]);
-
-          // console.log('Check down');
-
-          // this.state.receivingData[0].datasets[0].data.length = 0;
-
-          // response.data.values.forEach((element) => {
-          //   console.log('Here ->' + Math.round(element.y));
-
-          //   this.state.receivingData[0].datasets[0].data.push(Math.round(element.y));
-            
-          // });
-
-          // console.log('Check up');
-
-          // console.log('---');
-          // console.log(this.state.receivingData);
-          // console.log(this.state.receivingData[0]);
-          // console.log(this.state.receivingData[0].datasets);
-          // console.log(this.state.receivingData[0].datasets[0]);
-
-          // console.log("Check it here");
-          // console.log(this.state.receivingData[0].datasets[0].data);
-
       })
       .catch(function(error){
         // console.log(error);
@@ -353,7 +149,7 @@ class App extends Component{
       
         <div className="title"> <h1>Bit<span className="coin">coin</span> market</h1> </div>
 
-        {/* <div className="currencies">
+        <div className="currencies">
           <select name="first-currency">
             <option value="bitcoin">BTC</option>
           </select>
@@ -361,21 +157,13 @@ class App extends Component{
           <select name="second-currency">
             <option value="united-states-dollar">USD</option>
           </select>
-        </div> */}
+        </div>
 
         <div className="period">
-          <label data-param="1" onClick={this.handleDays}>1 day</label>
-          <label data-param="5" onClick={this.handleDays}>5 days</label>
-          <label data-param="30" onClick={this.handleDays}>1 month</label>
-          <label data-param="90" onClick={this.handleDays}>3 months</label>
-          <label data-param="180" onClick={this.handleDays}>6 months</label>
+          <label data-param="1" onClick={this.handleDays}>Search</label>
         </div>
         
         { this.state.labelClicked == 1 && <ChartOne items={this.state.receivingData}/> }
-        { this.state.labelClicked == 5 && <ChartFive items={this.state.receivingData}/> }
-        { this.state.labelClicked == 30 && <ChartThirty items={this.state.receivingData}/> }
-        { this.state.labelClicked == 90 && <ChartNinety items={this.state.receivingData}/> }
-        { this.state.labelClicked == 180 && <ChartOneEighty items={this.state.receivingData}/> }
 
       </div>
     );
