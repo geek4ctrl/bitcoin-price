@@ -4,6 +4,7 @@ import ChartComponent, {Bar, Line} from 'react-chartjs-2';
 import "./App.css";
 import axios from 'axios';
 import cors from 'cors';
+import moment from 'moment';
 
 class ChartOne extends Component{
   constructor(props){
@@ -60,6 +61,8 @@ class App extends Component{
     this.state = {
       labelClicked: null,
       data: null,
+      firstDate: undefined,
+      secondDate: undefined,
       realData: [],
       receivingData: [
         {
@@ -79,6 +82,21 @@ class App extends Component{
     }
 
     this.handleDays = this.handleDays.bind(this);
+    this.onChangeFirstDate = this.onChangeFirstDate.bind(this);
+    this.onChangeSecondDate = this.onChangeSecondDate.bind(this);
+
+  }
+
+  onChangeFirstDate(event){
+    this.setState({
+      firstDate: event.target.value
+    });
+  }
+
+  onChangeSecondDate(event){
+    this.setState({
+      secondDate: event.target.value
+    });
   }
 
   handleDays(e){
@@ -110,11 +128,7 @@ class App extends Component{
         labelClicked: e.target.dataset.param
       });
 
-      // axios.get('https://cors-anywhere.herokuapp.com/' + 'https://blockchain.info/charts/market-price?timespan='+ period +'&format=json')
-      // axios.get('https://cors-anywhere.herokuapp.com/' + 'https://api.sheety.co/95d5a869-510a-4cb2-a93d-3984aaf060f8')
-      // .then((response) => {
-
-        axios.get('https://cors-anywhere.herokuapp.com/' + 'https://api.coindesk.com/v1/bpi/historical/close.json?start=2019-05-01&end=2019-05-26')
+        axios.get('https://cors-anywhere.herokuapp.com/' + 'https://api.coindesk.com/v1/bpi/historical/close.json?start=' + this.state.firstDate +  '&end=' + this.state.secondDate + '')
         .then((response) => {
 
           console.log(response.data.bpi);
@@ -140,7 +154,8 @@ class App extends Component{
 
   render(){
 
-    //console.log(this.state.realData)
+    console.log('First date: ' + this.state.firstDate);
+    console.log('Second date: ' + this.state.secondDate);
 
     return(
       <div className="App">
@@ -150,18 +165,15 @@ class App extends Component{
         <div className="title"> <h1>Bit<span className="coin">coin</span> market</h1> </div>
 
         <div className="currencies">
-          <select name="first-currency">
-            <option value="bitcoin">BTC</option>
-          </select>
+            <input type="date" id="first-date" onChange={this.onChangeFirstDate} value={this.state.firstDate}/>
 
-          <select name="second-currency">
-            <option value="united-states-dollar">USD</option>
-          </select>
+            <input type="date" id="second-date" onChange={this.onChangeSecondDate} value={this.state.secondDate}/>
         </div>
 
+        { (this.state.firstDate && this.state.secondDate) && 
         <div className="period">
           <label data-param="1" onClick={this.handleDays}>Search</label>
-        </div>
+        </div>}
         
         { this.state.labelClicked == 1 && <ChartOne items={this.state.receivingData}/> }
 
