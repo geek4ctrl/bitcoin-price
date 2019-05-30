@@ -6,6 +6,175 @@ import axios from 'axios';
 import cors from 'cors';
 import moment from 'moment';
 
+import ReactDOM from 'react-dom';
+import FusionCharts from 'fusioncharts';
+import Chart from 'fusioncharts/fusioncharts.charts';
+import ReactFC from 'react-fusioncharts';
+import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+ReactFC.fcRoot(FusionCharts, Chart, FusionTheme);
+
+const chartConfigs = {
+  type: 'column2d',
+  width: '700',
+  height: '400',
+  dataFormat: 'json',
+  dataSource: {
+      // Chart configuration
+      "chart": {
+          "caption": "Countries With Most Oil Reserves [2017-18]",
+          "subCaption": "In MMbbl = One Million barrels",
+          "xAxisName": "Country",
+          "yAxisName": "Reserves (MMbbl)",
+          "numberSuffix": "K",
+          "theme": "fusion"
+      },
+      // Chart data
+      "data": [{
+          "label": "Venezuela",
+          "value": "290"
+      }, {
+          "label": "Saudi",
+          "value": "260"
+      }, {
+          "label": "Canada",
+          "value": "180"
+      }, {
+          "label": "Iran",
+          "value": "140"
+      }, {
+          "label": "Russia",
+          "value": "115"
+      }, {
+          "label": "UAE",
+          "value": "100"
+      }, {
+          "label": "US",
+          "value": "30"
+      }, {
+          "label": "China",
+          "value": "30"
+      }]
+      //"data": this.props.items[0].datasets[0].data 
+  },
+};
+
+class ChartBar extends Component {
+  constructor(props) {
+      super(props);
+
+      this.state = {
+        message: '',
+        enabled: false
+      }
+
+      this.trackPlotClick = this.trackPlotClick.bind(this);
+      this.resetChart = this.resetChart.bind(this);
+      this.dataPlotClick = this.dataPlotClick.bind(this);
+  }
+
+  // Handler for 'Track Data Plot Clicks' button.
+  // 1. Adds an eventlistener for data plot cick on the chart
+  // 2. Sets the default message when data plot click tracking is enabled
+  trackPlotClick() {
+      FusionCharts.addEventListener('dataplotClick', this.dataPlotClick);
+      this.setState({
+          message: defaultMessage,
+          enabled: true
+      });
+    }
+
+  // Event listener for dataplotclick event on chart. Update message with data plot values.
+  dataPlotClick(eventObj, dataObj) {
+      this.setState({
+          message: [
+              'You have clicked on plot ',
+              <strong>{dataObj.categoryLabel}</strong>,
+              ' whose value is ',
+              <strong>{dataObj.displayValue}</strong>
+          ]
+      });
+  }
+
+  // Handler for 'Reset' button.
+  // Resets the chart to default message and removed the event listener.
+  resetChart() {
+  FusionCharts.removeEventListener('dataplotClick', this.dataPlotClick);
+      this.setState({
+          message: '',
+          enabled: false
+      });
+    }
+
+    render () {
+
+      console.log("**************************");
+      console.log(chartConfigs.dataSource.data.length = 0);
+      console.log("**************************");
+
+      // **************************************************
+
+      // create a constructor for our Obj
+      function Obj(x, y) {
+        this.label = x;
+        this.value = y;
+      }
+
+      // How to fill array with those objects
+      // create an array
+      var objs = [];
+
+      // fill the array with our Objs
+      for (var i = 0; i < this.props.items[0].labels.length; i++) {
+        objs.push(new Obj(this.props.items[0].labels[i], this.props.items[0].datasets[0].data[i]));
+      }
+
+      // and show the result
+      // var msg = "";
+      // for (var i = 0; i < objs.length; i++) {
+      // msg += objs[i].x + ":" + objs[i].y + '\n';
+      // }
+
+      console.log("Display message");
+      console.log(objs);
+      console.log("Message displayed");
+
+      console.log("Old data message");
+      console.log(chartConfigs.dataSource.data = objs);
+      console.log("Old message displayed");
+
+      // this.state.receivingData[0].labels.push(prop);
+      // this.state.receivingData[0].datasets[0].data.push(o[prop]);
+
+      console.log("++++++++++++++++++++++++++++++++");
+      console.log(this.props.items[0].labels);
+      console.log(this.props.items[0].datasets[0].data);
+      console.log("++++++++++++++++++++++++++++++++");
+
+      return (
+        <div>
+          <ReactFC {...chartConfigs} />
+          <div style={{ padding: '5px' }} id="message">
+            { this.state.message || 'Click the below buttons to add an event dynamically to a charts' }
+          </div>
+          <button
+            className='btn btn-outline-secondary btn-sm'
+            disabled={this.state.enabled}
+            onClick={this.trackPlotClick}
+          >
+            Add/ listen to data plot click event
+          </button>
+          <button
+            className='btn btn-outline-secondary btn-sm'
+            disabled={!this.state.enabled}
+            onClick={this.resetChart}
+          >
+            Remove data plot click event
+          </button>
+        </div>
+      )
+    }
+}
+
 class ChartOne extends Component{
   constructor(props){
     super(props);
@@ -23,28 +192,29 @@ class ChartOne extends Component{
           }
         ],
         options: {
-          legend: {
-            'onClick': function (evt, item) {
-              console.log ('legend onClick', evt, item);
-            }
+          onClick: function (c, i){
+              console.log("Hey!");
           }
         }
       }
     }
+
+    this.handleEvent = this.handleEvent.bind(this);
+
+  }
+
+  handleEvent(event){
+    console.log("Hey!");
   }
 
   render(){
-
-    // console.log("One one One");
-    // console.log(this.state.chartData.labels);
-    // console.log(this.state.chartData.datasets);
-
     return (
       <div className="chart">
           <Line className="bar-chart"
             data={this.state.chartData}
             width={100}
             height={500}
+            onClick={this.handleEvent}
             options={{ maintainAspectRatio: false }}
           />
       </div>
@@ -76,7 +246,12 @@ class App extends Component{
               ],
               fill: false
             }
-          ]
+          ],
+          options: {
+            onClick: function (c, i){
+                console.log("Hey!");
+            }
+          }
         }
       ]
     }
@@ -85,6 +260,12 @@ class App extends Component{
     this.onChangeFirstDate = this.onChangeFirstDate.bind(this);
     this.onChangeSecondDate = this.onChangeSecondDate.bind(this);
 
+    this.handleEvent = this.handleEvent.bind(this);
+
+  }
+
+  handleEvent(event){
+    console.log("Hey!");
   }
 
   onChangeFirstDate(event){
@@ -159,15 +340,13 @@ class App extends Component{
 
     return(
       <div className="App">
-
-        Just clicked: {this.state.labelClicked}
       
         <div className="title"> <h1>Bit<span className="coin">coin</span> market</h1> </div>
 
         <div className="currencies">
             <input type="date" id="first-date" onChange={this.onChangeFirstDate} value={this.state.firstDate}/>
 
-            <input type="date" id="second-date" onChange={this.onChangeSecondDate} value={this.state.secondDate}/>
+            <input type="date" id="second-date" id="datePickerId" onChange={this.onChangeSecondDate} value={this.state.secondDate}/>
         </div>
 
         { (this.state.firstDate && this.state.secondDate) && 
@@ -175,7 +354,9 @@ class App extends Component{
           <label data-param="1" onClick={this.handleDays}>Search</label>
         </div>}
         
-        { this.state.labelClicked == 1 && <ChartOne items={this.state.receivingData}/> }
+        { this.state.labelClicked == 1 && <ChartOne onClick={this.handleEvent} items={this.state.receivingData}/> }
+
+        { this.state.labelClicked == 1 && <ChartBar items={this.state.receivingData} />}
 
       </div>
     );
