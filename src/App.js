@@ -190,12 +190,7 @@ class ChartOne extends Component{
             ],
             fill: false
           }
-        ],
-        options: {
-          onClick: function (c, i){
-              console.log("Hey!");
-          }
-        }
+        ]
       }
     }
 
@@ -246,12 +241,7 @@ class App extends Component{
               ],
               fill: false
             }
-          ],
-          options: {
-            onClick: function (c, i){
-                console.log("Hey!");
-            }
-          }
+          ]
         }
       ]
     }
