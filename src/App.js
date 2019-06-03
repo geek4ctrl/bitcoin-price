@@ -21,12 +21,18 @@ const chartConfigs = {
   dataSource: {
       // Chart configuration
       "chart": {
-          "caption": "Countries With Most Oil Reserves [2017-18]",
-          "subCaption": "In MMbbl = One Million barrels",
-          "xAxisName": "Country",
-          "yAxisName": "Reserves (MMbbl)",
-          "numberSuffix": "K",
-          "theme": "fusion"
+          "caption": "Bitcoin market",
+          "subCaption": "Have a look at the price over time",
+          "xAxisName": "Dates",
+          "yAxisName": "Prices (American dollar)",
+          // "numberSuffix": "K",
+          "theme": "fusion",
+          // "decimalSeparator": ",",
+          "thousandSeparator": ".",
+          // "numberSuffix": "/day",
+          // "numberPrefix": "$",
+          "numberScaleValue": "1000000,1000000000",
+          "numberScaleUnit": "M,B"
       },
       // Chart data
       "data": []
@@ -60,6 +66,25 @@ class ChartBar extends Component {
 
   // Event listener for dataplotclick event on chart. Update message with data plot values.
   dataPlotClick(eventObj, dataObj) {
+
+        function isPrime(num) {
+          var prime = num != 1;
+          for(var i=2; i<num; i++) {
+              if(num % i == 0) {
+                  prime = false;
+                  break;
+              }
+          }
+          return prime;
+        }
+
+      const number = dataObj.displayValue.substring(0, dataObj.displayValue.length);
+      const stringNumber = number.toString();
+      const newNumber = stringNumber.replace('.', '') + "0";
+      const parsedNumber = parseInt(newNumber);
+      console.log("The number is : " + newNumber);
+      console.log("Is the number prime? " + isPrime(newNumber));
+
       this.setState({
           message: [
               'You have clicked on plot ',
@@ -127,10 +152,13 @@ class ChartBar extends Component {
 
       return (
         <div>
+
           <ReactFC {...chartConfigs} />
+
           <div style={{ padding: '5px' }} id="message">
             { this.state.message || 'Click the below buttons to add an event dynamically to a charts' }
           </div>
+
           <button
             className='btn btn-outline-secondary btn-sm'
             disabled={this.state.enabled}
@@ -138,6 +166,7 @@ class ChartBar extends Component {
           >
             Add/ listen to data plot click event
           </button>
+
           <button
             className='btn btn-outline-secondary btn-sm'
             disabled={!this.state.enabled}
@@ -145,6 +174,7 @@ class ChartBar extends Component {
           >
             Remove data plot click event
           </button>
+
         </div>
       )
     }
