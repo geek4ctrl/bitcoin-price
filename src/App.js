@@ -25,13 +25,8 @@ const chartConfigs = {
       subCaption: "Have a look at the price over time",
       xAxisName: "Dates",
       yAxisName: "Prices (American dollar)",
-      // "numberSuffix": "K",
       theme: "fusion",
       decimals: "0",
-      // "decimalSeparator": ",",
-      //"thousandSeparator": ".",
-      // "numberSuffix": "/day",
-      // "numberPrefix": "$",
       numberScaleValue: "1000000,1000000000",
       numberScaleUnit: "M,B"
     },
@@ -53,13 +48,7 @@ class ChartBar extends Component {
     this.resetChart = this.resetChart.bind(this);
     this.dataPlotClick = this.dataPlotClick.bind(this);
 
-    this.displayPrime = this.displayPrime.bind(this);
-    this.checkPrime = this.checkPrime.bind(this);
   }
-
-  displayPrime() {}
-
-  checkPrime() {}
 
   // Handler for 'Track Data Plot Clicks' button.
   // 1. Adds an eventlistener for data plot cick on the chart
@@ -74,16 +63,6 @@ class ChartBar extends Component {
 
   // Event listener for dataplotclick event on chart. Update message with data plot values.
   dataPlotClick(eventObj, dataObj) {
-    function isPrime(num) {
-      var prime = num != 1;
-      for (var i = 2; i < num; i++) {
-        if (num % i == 0) {
-          prime = false;
-          break;
-        }
-      }
-      return prime;
-    }
 
     function displayPrimeOf(originalNumber) {
       console.log("Check original number: " + originalNumber);  
@@ -106,10 +85,6 @@ class ChartBar extends Component {
 
     let countOfPrimeNumbers = displayPrimeOf(parseFloat(dataObj.displayValue.replace(",", '')));
     let isNumberOfPrimeAprime = checkPrimeOf(countOfPrimeNumbers);
-
-    console.log("The prime number is: " + dataObj.displayValue);
-    console.log("The total number of prime number is: " + countOfPrimeNumbers);
-    console.log("Is the number of prime a prime? " + isNumberOfPrimeAprime);
 
     const number = dataObj.displayValue.substring(
       0,
@@ -146,11 +121,6 @@ class ChartBar extends Component {
   }
 
   render() {
-    console.log("**************************");
-    console.log((chartConfigs.dataSource.data.length = 0));
-    console.log("**************************");
-
-    // **************************************************
 
     // create a constructor for our Obj
     function Obj(x, y) {
@@ -171,28 +141,6 @@ class ChartBar extends Component {
         )
       );
     }
-
-    // and show the result
-    // var msg = "";
-    // for (var i = 0; i < objs.length; i++) {
-    // msg += objs[i].x + ":" + objs[i].y + '\n';
-    // }
-
-    console.log("Display message");
-    console.log(objs);
-    console.log("Message displayed");
-
-    console.log("Old data message");
-    console.log((chartConfigs.dataSource.data = objs));
-    console.log("Old message displayed");
-
-    // this.state.receivingData[0].labels.push(prop);
-    // this.state.receivingData[0].datasets[0].data.push(o[prop]);
-
-    console.log("++++++++++++++++++++++++++++++++");
-    console.log(this.props.items[0].labels);
-    console.log(this.props.items[0].datasets[0].data);
-    console.log("++++++++++++++++++++++++++++++++");
 
     return (
       <div>
@@ -296,7 +244,7 @@ class App extends Component {
   }
 
   handleEvent(event) {
-    console.log("Hey!");
+    // Add something
   }
 
   onChangeFirstDate(event) {
@@ -399,12 +347,12 @@ class App extends Component {
           </div>
         )}
 
-        {this.state.labelClicked == 1 && (
+        {/* {this.state.labelClicked == 1 && (
           <ChartOne
             onClick={this.handleEvent}
             items={this.state.receivingData}
           />
-        )}
+        )} */}
 
         {this.state.labelClicked == 1 && (
           <ChartBar items={this.state.receivingData} />
